@@ -1,7 +1,6 @@
 package tree;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 class TreeNode {
     int val;
@@ -62,11 +61,86 @@ public class BinaryTree {
         return true;
     }
 
+    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+    }
+
+    public List<List<Integer>> breadthLevelOrder(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        List<List<Integer>> levelList = new LinkedList<List<Integer>>();
+
+        if (root == null) {
+            return levelList;
+        }
+
+        queue.offer(root);
+
+        while(!queue.isEmpty()){
+            int levelCount = queue.size();
+            List<Integer> subList = new LinkedList<>();
+
+            for (int i= 0; i < levelCount; i++) {
+                if (queue.peek().left != null) {
+                    queue.offer(queue.peek().left);
+                }
+
+                if (queue.peek().right != null) {
+                    queue.offer(queue.peek().right);
+                }
+
+                subList.add(queue.poll().val);
+            }
+
+            levelList.add(0, subList);
+        }
+
+        return levelList;
+    }
+
+    public List<List<Integer>> depthLevelOrder(TreeNode root) {
+        List<List<Integer>> levels = new LinkedList<>();
+
+        if (root == null) {
+            return levels;
+        }
+
+        depthLevelOrder(root, 0, levels);
+        return levels;
+    }
+
+    void depthLevelOrder(TreeNode root, int level, List<List<Integer>> levels) {
+        if (levels.size() <= level) {
+            levels.add(0, new ArrayList<>());
+        }
+
+        if (root.left != null) {
+            depthLevelOrder(root.left, level + 1, levels);
+        }
+
+        if (root.right != null) {
+            depthLevelOrder(root.right, level + 1, levels);
+        }
+
+        levels.get(levels.size() - 1 - level).add(root.val);
+    }
+
     public static void main(String[] args) {
-         TreeNode root1 = new TreeNode(1);
-         root1.left = new TreeNode(2);
-         root1.right = new TreeNode(2);
-         root1.right.left = new TreeNode(3);
-         root1.right.right = new TreeNode(3);
+         TreeNode root = new TreeNode(3);
+         root.left = new TreeNode(9);
+         root.right = new TreeNode(20);
+
+         root.left.left = new TreeNode(4);
+         root.left.right = new TreeNode(5);
+
+         root.right.left = new TreeNode(15);
+         root.right.right = new TreeNode(7);
+
+         root.left.left.right = new TreeNode(8);
+
+         new BinaryTree().depthLevelOrder(null);
     }
 }
