@@ -128,19 +128,52 @@ public class BinaryTree {
         levels.get(levels.size() - 1 - level).add(root.val);
     }
 
-    public static void main(String[] args) {
-         TreeNode root = new TreeNode(3);
-         root.left = new TreeNode(9);
-         root.right = new TreeNode(20);
-
-         root.left.left = new TreeNode(4);
-         root.left.right = new TreeNode(5);
-
-         root.right.left = new TreeNode(15);
-         root.right.right = new TreeNode(7);
-
-         root.left.left.right = new TreeNode(8);
-
-         new BinaryTree().depthLevelOrder(null);
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return sortedArrayToBST(nums, 0, nums.length - 1);
     }
+
+    private TreeNode sortedArrayToBST(int[] nums, int low, int high) {
+        if (low > high) {
+            return null;
+        }
+
+        int mid = (high - low) / 2 + low;
+
+        TreeNode root = new TreeNode(nums[mid]);
+
+        root.left = sortedArrayToBST(nums, low, mid - 1);
+        root.right = sortedArrayToBST(nums, mid + 1, high);
+
+        return root;
+    }
+
+    private boolean hasPathSum(TreeNode root, int sum) {
+        if (root == null) {
+            return false;
+        }
+
+        if (root.val == sum && root.left == null && root.right == null) {
+            return true;
+        }
+
+        return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+    }
+
+    public static void main(String[] args) {
+         TreeNode root = new TreeNode(1);
+         root.left = new TreeNode(2);
+//         root.right = new TreeNode(20);
+//
+//         root.left.left = new TreeNode(4);
+//         root.left.right = new TreeNode(5);
+//
+//         root.right.left = new TreeNode(15);
+//         root.right.right = new TreeNode(7);
+//
+//         root.left.left.right = new TreeNode(8);
+
+         // new BinaryTree().depthLevelOrder(null);
+         System.out.println(new BinaryTree().hasPathSum(root, 1));
+    }
+
 }
