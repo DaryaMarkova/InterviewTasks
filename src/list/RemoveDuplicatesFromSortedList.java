@@ -1,13 +1,5 @@
 package list;
 
-import java.util.HashSet;
-
-class ListNode {
-    int val;
-    ListNode next;
-
-    ListNode(int x) { val = x;}
-}
 
 public class RemoveDuplicatesFromSortedList {
     public ListNode deleteDuplicates(ListNode head) {
