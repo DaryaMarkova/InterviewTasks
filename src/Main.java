@@ -1,4 +1,5 @@
 import java.util.*;
+import static java.lang.System.out;
 
 class ListNode {
     int val;
@@ -10,8 +11,38 @@ class ListNode {
 
 public class Main {
     public static void main(String[] args) {
-        List<String> output = new Main().letterCombinations("2");
-        output.forEach(item -> System.out.println(item));
+        // List<String> output = new Main().letterCombinations("2");
+        // output.forEach(item -> System.out.println(item));
+        out.println(new Main().search(new int[]{ 4, 5, 6, 7, 0, 1, 2}, 3));
+    }
+
+    public int search(int[] nums, int target) {
+        int length = nums.length;
+
+        if (length == 0)
+            return -1;
+
+        int lower = 0, upper = length - 1;
+        while (lower < upper) {
+            int middle = (lower + upper) / 2;
+
+            if (nums[middle] > nums[upper])
+                lower = middle + 1;
+            else upper = middle;
+        }
+
+        if (nums[lower] == target)
+            return lower;
+
+
+        int index;
+        
+        index = Arrays.binarySearch(nums, 0, lower, target);
+
+        if (index < 0)
+            index = Arrays.binarySearch(nums, lower + 1, length, target);
+
+        return index < -1 ? -1 : index;
     }
 
     public  List<String> letterCombinations(String digits) {
@@ -231,4 +262,6 @@ public class Main {
 
         return palindrome;
     }
+
+    
 }
