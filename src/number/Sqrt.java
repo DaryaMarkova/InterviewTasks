@@ -14,9 +14,4 @@ public class Sqrt {
 
         return (int) sqrt;
     }
-    // написать с использованием binarySearch
-
-    public static void main(String[] args) {
-        System.out.println(new Sqrt().mySqrt(225));
-    }
 }
