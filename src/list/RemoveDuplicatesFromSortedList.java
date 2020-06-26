@@ -2,6 +2,36 @@ package list;
 
 
 public class RemoveDuplicatesFromSortedList {
+    public ListNode deleteDuplicates2(ListNode head) {
+        if (head == null)
+            return null;
+
+        ListNode p = head;
+        ListNode fakeHead = new ListNode(0);
+        ListNode fakeTail = fakeHead;
+
+        while (p != null) {
+            int count = 0;
+
+            while (p.next != null && p.val == p.next.val) {
+                ++count;
+                p = p.next;
+            }
+
+            if (count == 0) {
+                fakeTail.next = p;
+                fakeTail = fakeTail.next;
+            }
+
+            if (p.next == null)
+                fakeTail.next = null;
+
+            p = p.next;
+
+        }
+
+        return fakeHead.next;
+    }
     public ListNode deleteDuplicates(ListNode head) {
         if (head == null) {
             return null;
@@ -72,22 +102,19 @@ public class RemoveDuplicatesFromSortedList {
     }
 
     public static void main(String[] args) {
-        ListNode headA = new ListNode(1);
-//        headA.next = new ListNode(3);
-//        headA.next.next = new ListNode(5);
+         ListNode head = new ListNode(1);
+         head.next = new ListNode(1);
+         head.next.next = new ListNode(1);
+         head.next.next.next = new ListNode(1);
+         head.next.next.next.next = new ListNode(1);
+         head.next.next.next.next.next = new ListNode(2);
+         head.next.next.next.next.next.next = new ListNode(3);
+         // head.next.next.next.next.next.next.next = new ListNode(5);
+         ListNode unique = new RemoveDuplicatesFromSortedList().deleteDuplicates2(head);
 
-        ListNode headB = null;
-//        headB.next = new ListNode(4);
-//        headB.next.next = new ListNode(6);
-//        headB.next.next.next = new ListNode(8);
-
-//        ListNode common = new ListNode(5);
-//        common.next = new ListNode(15);
-//
-//        headA.next.next.next = common;
-//        headB.next.next.next.next = common;
-
-        ListNode node = new RemoveDuplicatesFromSortedList().getIntersectionNode(headA, headB);
-        System.out.print(node.val);
+         while (unique != null) {
+             System.out.print(unique.val + " ");
+             unique = unique.next;
+         }
     }
 }

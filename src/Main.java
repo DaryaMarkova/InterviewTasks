@@ -11,9 +11,6 @@ class ListNode {
 
 public class Main {
     public static void main(String[] args) {
-        // List<String> output = new Main().letterCombinations("2");
-        // output.forEach(item -> System.out.println(item));
-        out.println(new Main().search(new int[]{ 4, 5, 6, 7, 0, 1, 2}, 3));
     }
 
     public int search(int[] nums, int target) {

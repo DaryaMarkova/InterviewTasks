@@ -2,8 +2,13 @@ package list;
 
 public class Main {
     public static void main(String[] args) {
-        ListNode head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, null)))));
-        new Main().swapPairs(head);
+        ListNode head = new ListNode(5);
+//        head.next = new ListNode(4);
+//        head.next.next = new ListNode(3);
+//        head.next.next.next = new ListNode(2);
+//        head.next.next.next.next = new ListNode(5);
+//        head.next.next.next.next.next = new ListNode(2);
+        ListNode output = new Main().partition(head, 3);
     }
 
     public ListNode swapPairs(ListNode head) {
@@ -24,5 +29,101 @@ public class Main {
         }
 
         return fake.next;
+    }
+
+    public ListNode rotateRightNew(ListNode head, int k) {
+        ListNode p = head, last = new ListNode(-1);
+
+        int size = getSize(head, last);
+        last = last.next;
+
+        int m = (k <= size) ? k : k % size;
+
+        if (m == size)
+            return head;
+
+        int i = 1;
+        while (p != null && i < size - m) {
+            p = p.next;
+            ++i;
+        }
+
+        if (p.next == null)
+            return head;
+
+        ListNode t = p.next;
+        p.next = null;
+        last.next = head;
+
+        return t;
+    }
+
+    public ListNode rotateRight(ListNode head, int k) {
+        while (--k >= 0) {
+            ListNode p = head, prevTail;
+
+            while (p.next != null && p.next.next != null) {
+                p = p.next;
+            }
+
+            prevTail = head.next == null ? null : p;
+            head = swap(head, prevTail);
+        }
+
+        return head;
+
+    }
+
+    private int getSize(ListNode head, ListNode last) {
+        ListNode p = head;
+        int count = 0;
+
+        while(p != null) {
+            ++count;
+            last.next = p;
+            p = p.next;
+        }
+
+        return count;
+    }
+
+    private ListNode swap(ListNode head, ListNode prevTail) {
+        if (prevTail == null)
+            return head;
+
+        ListNode temp = prevTail.next;
+        prevTail.next = null;
+        temp.next = head;
+
+        return temp;
+    }
+
+    public ListNode partition(ListNode head, int x) {
+        if (head == null) {
+            return null;
+        }
+
+        ListNode pHead = new ListNode(0);
+        ListNode qHead = new ListNode(0);
+        ListNode pTail = pHead, qTail = qHead;
+
+        ListNode t = head;
+
+        while (t != null) {
+            if (t.val < x) {
+               pTail.next = t;
+               pTail = pTail.next;
+            } else {
+                qTail.next = t;
+                qTail = qTail.next;
+            }
+
+            t = t.next;
+        }
+
+        qTail.next = null;
+        pTail.next = qHead.next;
+
+        return pHead.next;
     }
 }
