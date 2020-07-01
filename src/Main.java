@@ -10,9 +10,6 @@ class ListNode {
 }
 
 public class Main {
-    public static void main(String[] args) {
-    }
-
     public int search(int[] nums, int target) {
         int length = nums.length;
 

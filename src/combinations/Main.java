@@ -7,15 +7,44 @@ public class Main {
     public static void main(String[] args) {
       // new Main().getAllCombinations(4, 2);
         // System.out.println("Hello World")
-        List<List<Integer>> output = new LinkedList<>();
-        new Main().getSubsets(new int[]{1,2,3}, 0, new ArrayList<>(), output);
+        List<List<Integer>> output = new Main().subsetsWithDup(new int[]{1,2,2});
+        output.forEach(it -> System.out.println(it));
     }
 
     private List<List<Integer>> getSubsets(int[] nums) {
         List<List<Integer>> output = new LinkedList<>();
         output.add(new ArrayList<>());
         getSubsets(nums, 0, new ArrayList<>(), output);
+        output.forEach(it -> System.out.println(it));
         return output;
+    }
+
+    public List<List<Integer>> subsetsWithDup(int[] num) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> empty = new ArrayList<Integer>();
+        result.add(empty);
+        Arrays.sort(num);
+
+        for (int i = 0; i < num.length; i++) {
+            int dupCount = 0;
+
+            while( ((i+1) < num.length) && num[i+1] == num[i]) {
+                dupCount++;
+                i++;
+            }
+
+            int prevNum = result.size();
+            for (int j = 0; j < prevNum; j++) {
+                List<Integer> element = new ArrayList<>(result.get(j));
+
+                for (int t = 0; t <= dupCount; t++) {
+                    element.add(num[i]);
+                    result.add(new ArrayList<>(element));
+                }
+            }
+        }
+
+        return result;
     }
 
     private void getSubsets(int[] nums, int start, List<Integer> subset, List<List<Integer>> result) {
