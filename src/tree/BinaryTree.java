@@ -4,9 +4,13 @@ import java.util.*;
 
 class TreeNode {
     int val;
+
     TreeNode left;
     TreeNode right;
+    TreeNode next;
+
     TreeNode(int x) {val = x;}
+    boolean visited = false;
 }
 
 public class BinaryTree {
@@ -162,17 +166,6 @@ public class BinaryTree {
     public static void main(String[] args) {
          TreeNode root = new TreeNode(1);
          root.left = new TreeNode(2);
-//         root.right = new TreeNode(20);
-//
-//         root.left.left = new TreeNode(4);
-//         root.left.right = new TreeNode(5);
-//
-//         root.right.left = new TreeNode(15);
-//         root.right.right = new TreeNode(7);
-//
-//         root.left.left.right = new TreeNode(8);
-
-         // new BinaryTree().depthLevelOrder(null);
          System.out.println(new BinaryTree().hasPathSum(root, 1));
     }
 
